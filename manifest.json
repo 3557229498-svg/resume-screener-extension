@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "简历筛选助手（原型）",
+  "version": "0.1.0",
+  "description": "本地离线批量筛选简历：PDF/图片 OCR 识别 + 院校白名单匹配 + 奖学金识别 + 导出 CSV",
+  "action": {
+    "default_title": "简历筛选助手",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["vendor/*", "tessdata/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

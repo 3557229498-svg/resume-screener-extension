@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>简历筛选助手 · 工作台</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <h1>简历筛选助手 · 工作台</h1>
+  <p class="sub">全部计算都在本机浏览器内完成，文件不会上传到任何服务器。</p>
+</header>
+
+<main>
+  <!-- ========== 1. 院校白名单 ========== -->
+  <section class="card">
+    <div class="card-head">
+      <h2>① 院校白名单</h2>
+      <span class="hint" id="wlCount">0 所</span>
+    </div>
+    <textarea id="whitelist" rows="8" spellcheck="false"
+      placeholder="每行一个学校名称，例如：&#10;清华大学&#10;浙江大学&#10;# 以 # 开头的行会被忽略"></textarea>
+    <div class="row">
+      <button id="saveWhitelist" class="primary">保存白名单</button>
+      <button id="resetWhitelist">恢复默认</button>
+      <button id="importWhitelist">从 txt 文件导入</button>
+      <input type="file" id="wlFile" accept=".txt,text/plain" hidden>
+      <span class="hint" id="wlSaved"></span>
+    </div>
+  </section>
+
+  <!-- ========== 2. 识别与匹配参数 ========== -->
+  <section class="card">
+    <h2>② 识别与匹配参数</h2>
+    <div class="grid">
+      <label>关键词
+        <input type="text" id="keyword" placeholder="奖学金">
+      </label>
+      <label>扫描页渲染 DPI
+        <input type="number" id="dpi" min="100" max="600" step="50">
+      </label>
+      <label>文本层最小字符数
+        <input type="number" id="minChars" min="0" max="500" step="5">
+      </label>
+      <label class="check">
+        <input type="checkbox" id="binarize"> OCR 前做二值化（扫描件更清晰时可用）
+      </label>
+    </div>
+    <p class="hint">
+      文本型 PDF 会直接取文字层；某页文字太少时，才按 DPI 渲染成图片走 OCR。
+    </p>
+  </section>
+
+  <!-- ========== 3. 选择简历 ========== -->
+  <section class="card">
+    <h2>③ 选择简历</h2>
+    <div class="row">
+      <button id="pickFiles" class="primary">选择文件</button>
+      <button id="pickDir">选择整个文件夹</button>
+      <button id="clearFiles">清空列表</button>
+      <input type="file" id="fileInput" multiple hidden
+             accept=".pdf,.jpg,.jpeg,.png,.bmp,.webp">
+      <input type="file" id="dirInput" webkitdirectory multiple hidden>
+    </div>
+    <div id="dropzone" class="dropzone">
+      把简历文件或文件夹拖到这里
+    </div>
+    <p class="hint" id="fileSummary">尚未选择文件。支持 PDF / JPG / PNG / BMP / WEBP。</p>
+  </section>
+
+  <!-- ========== 4. 执行 ========== -->
+  <section class="card">
+    <div class="row">
+      <button id="run" class="primary big">开始筛选</button>
+      <button id="cancel" disabled>停止</button>
+    </div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <p class="hint" id="status">就绪</p>
+  </section>
+
+  <!-- ========== 5. 汇总 ========== -->
+  <section class="card stats" id="stats" hidden>
+    <div class="stat"><b id="sTotal">0</b><span>总简历</span></div>
+    <div class="stat"><b id="sQualified">0</b><span>院校合格</span></div>
+    <div class="stat"><b id="sScholar">0</b><span>含奖学金</span></div>
+    <div class="stat"><b id="sFail">0</b><span>提取失败</span></div>
+    <div class="stat"><b id="sOcr">0</b><span>用到 OCR</span></div>
+  </section>
+
+  <!-- ========== 6. 结果 ========== -->
+  <section class="card">
+    <div class="card-head">
+      <h2>④ 筛选结果</h2>
+      <div class="row">
+        <select id="filter">
+          <option value="all">全部</option>
+          <option value="qualified">仅院校合格</option>
+          <option value="scholar">仅含奖学金</option>
+          <option value="both">院校合格且有奖学金</option>
+          <option value="fail">仅提取失败</option>
+        </select>
+        <button id="export" class="primary" disabled>导出 CSV</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="result">
+        <thead>
+          <tr>
+            <th style="width:34px">#</th>
+            <th style="width:22%">文件名</th>
+            <th style="width:15%">匹配院校</th>
+            <th style="width:8%">院校合格</th>
+            <th style="width:8%">含奖学金</th>
+            <th>简历文本片段（点击查看全文）</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- 全文查看 -->
+<dialog id="detail">
+  <div class="dialog-head">
+    <b id="detailTitle"></b>
+    <button id="detailClose">关闭</button>
+  </div>
+  <pre id="detailBody"></pre>
+</dialog>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

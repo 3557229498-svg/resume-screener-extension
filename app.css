@@ -1,0 +1,82 @@
+/* app.css —— 极简工作台样式，不依赖任何框架 */
+:root {
+  --brand: #1a73e8;
+  --line: #e3e6ea;
+  --ok: #0f9d58;
+  --no: #b3261e;
+  --bg: #f6f8fb;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 24px; background: var(--bg); color: #1f2328;
+  font: 14px/1.6 system-ui, "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+header { max-width: 1180px; margin: 0 auto 16px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+h2 { font-size: 15px; margin: 0 0 10px; }
+.sub, .hint { color: #6b7280; font-size: 12.5px; margin: 4px 0; }
+main { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+
+.card {
+  background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px; box-shadow: 0 1px 2px rgba(16,24,40,.04);
+}
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+textarea, input[type="text"], input[type="number"], select {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px;
+  font: inherit; background: #fff; color: inherit;
+}
+textarea { resize: vertical; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+textarea:focus, input:focus, select:focus { outline: 2px solid #cfe1ff; border-color: var(--brand); }
+
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.grid label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: #4b5563; }
+.grid label.check { flex-direction: row; align-items: center; gap: 8px; padding-top: 18px; }
+.grid label.check input { width: auto; }
+
+button {
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 6px;
+  background: #fff; font: inherit; cursor: pointer; transition: .15s;
+}
+button:hover:not(:disabled) { border-color: #c3c8cf; background: #fafbfc; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+button.primary:hover:not(:disabled) { background: #1667cf; }
+button.big { padding: 10px 26px; font-size: 15px; }
+
+.dropzone {
+  margin-top: 10px; padding: 26px; text-align: center; color: #6b7280;
+  border: 2px dashed #cfd5dd; border-radius: 10px; background: #fbfcfe;
+}
+.dropzone.over { border-color: var(--brand); background: #eef4ff; color: var(--brand); }
+
+.progress { height: 8px; background: #eceff3; border-radius: 99px; overflow: hidden; margin-top: 12px; }
+.progress .bar { height: 100%; width: 0; background: var(--brand); transition: width .2s; }
+
+.stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat { flex: 1 1 120px; text-align: center; padding: 10px; border-radius: 8px; background: #f8fafc; }
+.stat b { display: block; font-size: 22px; }
+.stat span { font-size: 12px; color: #6b7280; }
+
+.table-wrap { max-height: 460px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eef0f3; vertical-align: top; }
+thead th { position: sticky; top: 0; background: #f8fafc; z-index: 1; font-weight: 600; }
+tbody tr:hover { background: #fafcff; }
+td.snippet { cursor: pointer; color: #374151; }
+td.snippet:hover { color: var(--brand); text-decoration: underline; }
+.yes { color: var(--ok); font-weight: 600; }
+.no { color: var(--no); }
+.fail { color: #b26a00; }
+mark { background: #fff3b0; padding: 0 2px; border-radius: 2px; }
+
+dialog { width: min(900px, 90vw); max-height: 80vh; border: 0; border-radius: 10px; padding: 0; }
+dialog::backdrop { background: rgba(15,23,42,.45); }
+.dialog-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; border-bottom: 1px solid var(--line);
+}
+#detailBody { margin: 0; padding: 16px; max-height: 65vh; overflow: auto;
+              white-space: pre-wrap; word-break: break-word; font-size: 13px; }

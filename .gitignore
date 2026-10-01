@@ -1,0 +1,21 @@
+# 依赖（npm install 生成）
+node_modules/
+
+# 由 npm run setup 生成的第三方库与语言包
+vendor/
+tessdata*/
+
+# 测试素材与导出结果（防止误传真实简历）
+samples/
+test-data/
+*.csv
+*.pdf
+*.jpg
+*.jpeg
+*.png
+!docs/*.png
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+.vscode/
